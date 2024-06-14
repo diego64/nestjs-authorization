@@ -1,16 +1,16 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { UserCreateDTO } from './user.dto';
+import { UserCreateDTO } from '../user.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './user.schema';
+import { User } from '../user.schema';
 import { Model } from 'mongoose';
 import { randomUUID } from 'crypto';
 import { hash } from 'bcrypt';
 
 @Injectable()
-export class UsersService {
+export class CreateUserUseCase {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  async create(userDTO: UserCreateDTO) {
+  async execute(userDTO: UserCreateDTO) {
     //Check if a username already exists
     const userExisted = await this.userModel
       .findOne({
